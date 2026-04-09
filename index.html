@@ -11,13 +11,7 @@
     </head>
     <body>
         <div class="page-shell">
-            <header class="masthead">
-                <p class="eyebrow">Occult browser ritual / drag only the witness</p>
-                <h1>the archive bends when you scroll</h1>
-                <p class="intro">
-                    robin williams is the only object you can touch. everything else
-                    drifts into a different angle when the page is pulled downward.
-                </p>
+              
             </header>
 
             <main class="experience" aria-label="scroll driven 3d collage">
@@ -25,13 +19,13 @@
                     <div class="scene-noise"></div>
 
                     <div class="model-node node-kowloon" data-scroll-model
-                        data-orbit-start="18deg 84deg 17m"
-                        data-orbit-end="248deg 58deg 10m"
-                        data-fov-start="34deg" data-fov-end="16deg">
-                        <div class="node-label">Kowloon / memory block</div>
+                        data-orbit-start="18deg 84deg 20m"
+                        data-orbit-end="18deg 70deg -10m"
+                        data-fov-start="3deg" data-fov-end="34deg">
+                        <!-- <div class="node-label">Kowloon / memory block</div> -->
                         <model-viewer src="assets/kowloon_walled_city_photogrammetry.glb"
                             alt="Kowloon Walled City photogrammetry"
-                            camera-orbit="18deg 84deg 17m"
+                            camera-orbit="3deg 84deg 17m"
                             field-of-view="34deg"
                             disable-zoom disable-pan interaction-prompt="none"
                             shadow-intensity="0.65" exposure="1.05">
@@ -42,7 +36,7 @@
                         data-orbit-start="-44deg 70deg 13m"
                         data-orbit-end="182deg 48deg 9m"
                         data-fov-start="28deg" data-fov-end="19deg">
-                        <div class="node-label">industrial cranes / procession</div>
+                        <!-- <div class="node-label">industrial cranes / procession</div> -->
                         <model-viewer
                             src="assets/6_low-poly_cranes_industrial_pack_1.glb"
                             alt="Low poly industrial cranes" camera-orbit="-44deg 70deg 13m"
@@ -52,7 +46,7 @@
                         </model-viewer>
                     </div>
 
-                    <div class="model-node node-bread" data-scroll-model
+                    <!-- <div class="model-node node-bread" data-scroll-model
                         data-orbit-start="102deg 76deg 6m"
                         data-orbit-end="410deg 36deg 3.2m"
                         data-fov-start="25deg" data-fov-end="12deg">
@@ -63,40 +57,10 @@
                             disable-zoom disable-pan interaction-prompt="none"
                             shadow-intensity="0.85" exposure="1.1">
                         </model-viewer>
-                    </div>
-
-                    <div class="model-node node-autumn" data-scroll-model
-                        data-orbit-start="240deg 66deg 8m"
-                        data-orbit-end="548deg 41deg 5m"
-                        data-fov-start="31deg" data-fov-end="18deg">
-                        <div class="node-label">autumn witness field</div>
-                        <model-viewer
-                            src="assets/psx-autumn-trees-rocks-bushes/source/trees and rocks.glb"
-                            alt="PSX trees and rocks" camera-orbit="240deg 66deg 8m"
-                            field-of-view="31deg"
-                            disable-zoom disable-pan interaction-prompt="none"
-                            shadow-intensity="0.8" exposure="1">
-                        </model-viewer>
-                    </div>
-
-                    <div class="model-node node-robin">
-                        <div class="node-label">Robin Williams / the only touchable witness</div>
-                        <model-viewer id="robin-williams"
-                            src="assets/robin_williams_-_low.glb"
-                            alt="Robin Williams low poly sculpture"
-                            camera-controls touch-action="pan-y"
-                            camera-orbit="12deg 78deg 4.2m"
-                            min-camera-orbit="auto 38deg 2.4m"
-                            max-camera-orbit="auto 116deg 6.7m"
-                            min-field-of-view="12deg"
-                            max-field-of-view="42deg"
-                            shadow-intensity="1.2" exposure="1.15"
-                            interaction-prompt="auto">
-                        </model-viewer>
-                    </div>
+                    </div> -->
+                    
 
                     <div class="tree-dock">
-                        <div class="node-label">perimeter tree / right channel</div>
                         <model-viewer id="psx-tree"
                             src="assets/psx-tree/source/TREE_PURPLEFLOWERS_PSX.glb"
                             alt="Spinning PSX purple tree"
@@ -108,22 +72,25 @@
                     </div>
                 </div>
 
-                <section class="scroll-panel panel-1">
-                    <p>drag robin. leave the rest alone.</p>
-                </section>
-                <section class="scroll-panel panel-2">
-                    <p>pull the page and the camera tilts around the relics.</p>
-                </section>
-                <section class="scroll-panel panel-3">
-                    <p>the right-side tree never stops rotating.</p>
-                </section>
-                <section class="scroll-panel panel-4">
-                    <p>scroll harder and the orbit mutates further.</p>
-                </section>
-                <section class="scroll-panel panel-5">
-                    <p>the scene ends when the archive has fully turned inside out.</p>
-                </section>
+    
             </main>
+
+            <!-- <span class="scroll-instruction">scroll to explore</span> -->
+            <div class="model-node node-robin">
+
+                        <model-viewer id="robin-williams"
+                            src="assets/robin_williams_-_low.glb"
+                            alt="Robin Williams low poly sculpture"
+                            camera-controls touch-action="pan-y"
+                            camera-orbit="12deg 78deg 4.2m"
+                            min-camera-orbit="auto 38deg 2.4m"
+                            max-camera-orbit="auto 116deg 6.7m"
+                            min-field-of-view="12deg"
+                            max-field-of-view="42deg"
+                            shadow-intensity="1.2" exposure="1.15"
+                            interaction-prompt="none">
+                        </model-viewer>
+                    </div>
         </div>
     </body>
 </html>
