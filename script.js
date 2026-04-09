@@ -1,12 +1,8 @@
-const scrollModels = Array.from(document.querySelectorAll("[data-scroll-model]"));
-const treeDock = document.querySelector(".tree-dock");
-const treeViewer = document.querySelector("#psx-tree");
-
-let scrollProgress = 0;
-let lastScrollY = window.scrollY;
-let treeAngle = 0;
-let treeVelocity = 0;
-let ticking = false;
+const scrollModel = document.querySelector("[data-scroll-model]");
+const masthead = document.querySelector(".masthead");
+const scene = document.querySelector(".scene");
+const continueButton = document.querySelector(".continue-button");
+const cursorDot = document.querySelector(".cursor-dot");
 
 function lerp(start, end, amount) {
     return start + (end - start) * amount;
@@ -20,85 +16,96 @@ function parseMeters(value) {
     return Number.parseFloat(value.replace("m", ""));
 }
 
+function mapCameraProgress(rawProgress) {
+    if (rawProgress <= 0.58) {
+        return (rawProgress / 0.58) * 0.38;
+    }
+
+    if (rawProgress <= 0.92) {
+        return 0.38 + ((rawProgress - 0.58) / 0.34) * 0.42;
+    }
+
+    return 0.8 + ((rawProgress - 0.92) / 0.08) * 0.2;
+}
+
 function updateScrollState() {
+    if (!scrollModel) {
+        return;
+    }
+
+    const viewer = scrollModel.querySelector("model-viewer");
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-    scrollProgress = scrollable > 0 ? window.scrollY / scrollable : 0;
+    const rawProgress = scrollable > 0 ? window.scrollY / scrollable : 0;
+    const progress = Math.min(1, Math.max(0, mapCameraProgress(rawProgress)));
 
-    scrollModels.forEach((node, index) => {
-        const viewer = node.querySelector("model-viewer");
-        const yawStart = parseDegrees(node.dataset.orbitStart.split(" ")[0]);
-        const pitchStart = parseDegrees(node.dataset.orbitStart.split(" ")[1]);
-        const distanceStart = parseMeters(node.dataset.orbitStart.split(" ")[2]);
-        const yawEnd = parseDegrees(node.dataset.orbitEnd.split(" ")[0]);
-        const pitchEnd = parseDegrees(node.dataset.orbitEnd.split(" ")[1]);
-        const distanceEnd = parseMeters(node.dataset.orbitEnd.split(" ")[2]);
-        const fovStart = parseDegrees(node.dataset.fovStart);
-        const fovEnd = parseDegrees(node.dataset.fovEnd);
-        const phase = Math.min(1, Math.max(0, scrollProgress * 1.18 + index * 0.08));
+    const [yawStart, pitchStart, distanceStart] = scrollModel.dataset.orbitStart.split(" ");
+    const [yawMid, pitchMid, distanceMid] = scrollModel.dataset.orbitMid.split(" ");
+    const [yawEnd, pitchEnd, distanceEnd] = scrollModel.dataset.orbitEnd.split(" ");
 
-        const yaw = lerp(yawStart, yawEnd, phase);
-        const pitch = lerp(pitchStart, pitchEnd, phase);
-        const distance = lerp(distanceStart, distanceEnd, phase);
-        const fov = lerp(fovStart, fovEnd, phase);
+    let yaw;
+    let pitch;
+    let distance;
 
-        viewer.cameraOrbit = `${yaw.toFixed(2)}deg ${pitch.toFixed(2)}deg ${distance.toFixed(2)}m`;
-        viewer.fieldOfView = `${fov.toFixed(2)}deg`;
+    if (progress <= 0.8) {
+        const phase = progress / 0.8;
+        yaw = lerp(parseDegrees(yawStart), parseDegrees(yawMid), phase);
+        pitch = lerp(parseDegrees(pitchStart), parseDegrees(pitchMid), phase);
+        distance = lerp(parseMeters(distanceStart), parseMeters(distanceMid), phase);
+    } else {
+        const phase = (progress - 0.8) / 0.2;
+        yaw = lerp(parseDegrees(yawMid), parseDegrees(yawEnd), phase);
+        pitch = lerp(parseDegrees(pitchMid), parseDegrees(pitchEnd), phase);
+        distance = lerp(parseMeters(distanceMid), parseMeters(distanceEnd), phase);
+    }
 
-        const driftY = Math.sin(scrollProgress * Math.PI * 2 + index) * 34;
-        const driftX = Math.cos(scrollProgress * Math.PI * 1.6 + index * 0.7) * 24;
-        const rotate = lerp(-18, 22, phase) + index * 3;
-        const scale = 1 + Math.sin(scrollProgress * Math.PI + index) * 0.08;
+    const fov = lerp(
+        parseDegrees(scrollModel.dataset.fovStart),
+        parseDegrees(scrollModel.dataset.fovEnd),
+        progress
+    );
 
-        node.style.transform = [
-            `translate(${driftX.toFixed(1)}px, ${driftY.toFixed(1)}px)`,
-            node.classList.contains("node-kowloon") ? "rotate(-12deg) skewY(8deg)" : "",
-            node.classList.contains("node-cranes") ? "rotate(17deg) skewX(-10deg) translateZ(120px)" : "",
-            node.classList.contains("node-bread") ? "rotate(-28deg) skewX(14deg)" : "",
-            node.classList.contains("node-autumn") ? "rotate(9deg) skewY(-14deg)" : "",
-            `rotateZ(${rotate.toFixed(2)}deg)`,
-            `scale(${scale.toFixed(3)})`
-        ].join(" ");
-    });
+    viewer.setAttribute(
+        "camera-orbit",
+        `${yaw.toFixed(2)}deg ${pitch.toFixed(2)}deg ${distance.toFixed(2)}m`
+    );
+    viewer.setAttribute("field-of-view", `${fov.toFixed(2)}deg`);
+
+    const transition = Math.min(1, Math.max(0, rawProgress / 0.22));
+
+    if (masthead) {
+        masthead.style.opacity = (1 - transition).toFixed(3);
+        masthead.style.transform = `translateY(${(transition * -2).toFixed(2)}rem)`;
+    }
+
+    if (scene) {
+        scene.style.opacity = transition.toFixed(3);
+    }
+
+    if (continueButton) {
+        const buttonFade = Math.min(1, Math.max(0, (rawProgress - 0.9) / 0.08));
+        continueButton.style.opacity = buttonFade.toFixed(3);
+        continueButton.style.pointerEvents = buttonFade > 0.98 ? "auto" : "none";
+    }
 }
 
 function onScroll() {
-    const delta = window.scrollY - lastScrollY;
-    lastScrollY = window.scrollY;
-    treeVelocity += delta * 0.045;
-
-    if (!ticking) {
-        window.requestAnimationFrame(() => {
-            updateScrollState();
-            ticking = false;
-        });
-        ticking = true;
-    }
-}
-
-function animateTree() {
-    treeVelocity *= 0.92;
-    treeAngle += 0.22 + treeVelocity;
-
-    if (treeDock && treeViewer) {
-        const orbitYaw = 24 + scrollProgress * 240 + treeVelocity * 2.5;
-        const orbitPitch = 78 - scrollProgress * 18;
-        const orbitDistance = 100 - scrollProgress * 0.6;
-
-        treeViewer.orientation = `0deg ${treeAngle.toFixed(2)}deg 0deg`;
-        treeViewer.cameraOrbit =
-            `${orbitYaw.toFixed(2)}deg ${orbitPitch.toFixed(2)}deg ${orbitDistance.toFixed(2)}m`;
-
-        const sway = Math.sin(treeAngle * 0.02) * 10;
-        const lift = Math.cos(treeAngle * 0.015) * 8;
-        treeDock.style.transform =
-            `translate3d(${sway.toFixed(2)}px, ${lift.toFixed(2)}px, 0) rotate(-7deg) scale(${(1 + scrollProgress * 0.06).toFixed(3)})`;
-    }
-
-    window.requestAnimationFrame(animateTree);
+    updateScrollState();
 }
 
 updateScrollState();
-animateTree();
 
 window.addEventListener("scroll", onScroll, { passive: true });
 window.addEventListener("resize", updateScrollState);
+
+if (continueButton) {
+    continueButton.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+}
+
+if (cursorDot) {
+    window.addEventListener("mousemove", (event) => {
+        cursorDot.style.transform =
+            `translate(${event.clientX.toFixed(0)}px, ${event.clientY.toFixed(0)}px)`;
+    });
+}

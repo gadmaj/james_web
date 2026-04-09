@@ -10,87 +10,41 @@
         <script src="script.js" defer></script>
     </head>
     <body>
-        <div class="page-shell">
-              
-            </header>
-
-            <main class="experience" aria-label="scroll driven 3d collage">
-                <div class="scene" aria-hidden="true">
-                    <div class="scene-noise"></div>
-
-                    <div class="model-node node-kowloon" data-scroll-model
-                        data-orbit-start="18deg 84deg 20m"
-                        data-orbit-end="18deg 70deg -10m"
-                        data-fov-start="3deg" data-fov-end="34deg">
-                        <!-- <div class="node-label">Kowloon / memory block</div> -->
-                        <model-viewer src="assets/kowloon_walled_city_photogrammetry.glb"
-                            alt="Kowloon Walled City photogrammetry"
-                            camera-orbit="3deg 84deg 17m"
-                            field-of-view="34deg"
-                            disable-zoom disable-pan interaction-prompt="none"
-                            shadow-intensity="0.65" exposure="1.05">
-                        </model-viewer>
-                    </div>
-
-                    <div class="model-node node-cranes" data-scroll-model
-                        data-orbit-start="-44deg 70deg 13m"
-                        data-orbit-end="182deg 48deg 9m"
-                        data-fov-start="28deg" data-fov-end="19deg">
-                        <!-- <div class="node-label">industrial cranes / procession</div> -->
-                        <model-viewer
-                            src="assets/6_low-poly_cranes_industrial_pack_1.glb"
-                            alt="Low poly industrial cranes" camera-orbit="-44deg 70deg 13m"
-                            field-of-view="28deg"
-                            disable-zoom disable-pan interaction-prompt="none"
-                            shadow-intensity="1.1" exposure="1.2">
-                        </model-viewer>
-                    </div>
-
-                    <!-- <div class="model-node node-bread" data-scroll-model
-                        data-orbit-start="102deg 76deg 6m"
-                        data-orbit-end="410deg 36deg 3.2m"
-                        data-fov-start="25deg" data-fov-end="12deg">
-                        <div class="node-label">bread relics / offering stack</div>
-                        <model-viewer src="assets/free-bread-pack-cs2/source/bread pack.glb"
-                            alt="Bread pack model" camera-orbit="102deg 76deg 6m"
-                            field-of-view="25deg"
-                            disable-zoom disable-pan interaction-prompt="none"
-                            shadow-intensity="0.85" exposure="1.1">
-                        </model-viewer>
-                    </div> -->
-                    
-
-                    <div class="tree-dock">
-                        <model-viewer id="psx-tree"
-                            src="assets/psx-tree/source/TREE_PURPLEFLOWERS_PSX.glb"
-                            alt="Spinning PSX purple tree"
-                            disable-zoom disable-pan interaction-prompt="none"
-                            camera-orbit="24deg 78deg 3.2m"
-                            field-of-view="24deg"
-                            shadow-intensity="0.9" exposure="1.08">
-                        </model-viewer>
-                    </div>
+        <div class="cursor-dot" aria-hidden="true"></div>
+        <main class="experience" aria-label="scroll scene">
+            <header class="masthead">
+                <div class="masthead-robin">
+                    <model-viewer id="robin-williams"
+                        src="assets/robin_williams_-_low.glb"
+                        alt="Robin Williams low poly sculpture"
+                        camera-controls touch-action="pan-y"
+                        camera-orbit="12deg 78deg 4.2m"
+                        min-camera-orbit="auto 38deg 2.4m"
+                        max-camera-orbit="auto 116deg 6.7m"
+                        min-field-of-view="12deg"
+                        max-field-of-view="42deg"
+                        shadow-intensity="1.2" exposure="1.15"
+                        interaction-prompt="none">
+                    </model-viewer>
                 </div>
-
-    
-            </main>
-
-            <!-- <span class="scroll-instruction">scroll to explore</span> -->
-            <div class="model-node node-robin">
-
-                        <model-viewer id="robin-williams"
-                            src="assets/robin_williams_-_low.glb"
-                            alt="Robin Williams low poly sculpture"
-                            camera-controls touch-action="pan-y"
-                            camera-orbit="12deg 78deg 4.2m"
-                            min-camera-orbit="auto 38deg 2.4m"
-                            max-camera-orbit="auto 116deg 6.7m"
-                            min-field-of-view="12deg"
-                            max-field-of-view="42deg"
-                            shadow-intensity="1.2" exposure="1.15"
-                            interaction-prompt="none">
-                        </model-viewer>
-                    </div>
-        </div>
+                <h1>james-sindo.net</h1>
+            </header>
+            <div class="scene">
+                <div class="model-node node-kowloon" data-scroll-model
+                    data-orbit-start="5deg 84deg 20m"
+                    data-orbit-mid="15deg 88deg 7m"
+                    data-orbit-end="16deg 88deg -10m"
+                    data-fov-start="20deg" data-fov-end="3deg">
+                    <model-viewer
+                        src="assets/kowloon_walled_city_photogrammetry.glb"
+                        alt="Kowloon Walled City photogrammetry"
+                        field-of-view="34deg"
+                        disable-zoom disable-pan interaction-prompt="none"
+                        shadow-intensity="0.65" exposure="1.05">
+                    </model-viewer>
+                </div>
+            </div>
+            <button class="continue-button" type="button">continue</button>
+        </main>
     </body>
 </html>
