@@ -6,7 +6,7 @@ const cursorDot = document.querySelector(".cursor-dot");
 
 
 let redirectTime = "1000";
-let redirectURL = "/portfolio/";
+let redirectURL = "./portfolio/";
 let timeoutHandle;
 
 function timedRedirect() {
