@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>james-sindo.net | portfolio</title>
+        <link rel="stylesheet" href="../style.css">
+        <script type="module"
+            src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.2.0/model-viewer.min.js"></script>
+        <script src="../script.js" defer></script>
+    </head>
+    <body>
+        <div class="cursor-dot" aria-hidden="true"></div>
+        <main class="experience" aria-label="scroll scene">
+            <header class="masthead">
+                <div class="masthead-robin">
+                    <model-viewer id="robin-williams"
+                        src="../assets/robin_williams_-_low.glb"
+                        alt="Robin Williams low poly sculpture"
+                        camera-controls touch-action="pan-y"
+                        camera-orbit="12deg 78deg 4.2m"
+                        min-camera-orbit="auto 38deg 2.4m"
+                        max-camera-orbit="auto 116deg 6.7m"
+                        min-field-of-view="12deg"
+                        max-field-of-view="42deg"
+                        shadow-intensity="1.2" exposure="1.15"
+                        interaction-prompt="none">
+                    </model-viewer>
+                </div>
+                <h1>portfolio</h1>
+            </header>
+            <!-- <div class="scene">
+                <div class="model-node node-kowloon" data-scroll-model
+                    data-orbit-start="5deg 84deg 20m"
+                    data-orbit-mid="15deg 88deg 7m"
+                    data-orbit-end="16deg 88deg -10m"
+                    data-fov-start="20deg" data-fov-end="3deg">
+                    <model-viewer
+                        src="assets/kowloon_walled_city_photogrammetry.glb"
+                        alt="Kowloon Walled City photogrammetry"
+                        field-of-view="34deg"
+                        disable-zoom disable-pan interaction-prompt="none"
+                        shadow-intensity="0.65" exposure="1.05">
+                    </model-viewer>
+                </div>
+            </div>
+            <button class="continue-button" type="button">continue</button> -->
+        </main>
+    </body>
+</html>

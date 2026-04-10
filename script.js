@@ -4,6 +4,20 @@ const scene = document.querySelector(".scene");
 const continueButton = document.querySelector(".continue-button");
 const cursorDot = document.querySelector(".cursor-dot");
 
+
+let redirectTime = "1000";
+let redirectURL = "/portfolio/";
+let timeoutHandle;
+
+function timedRedirect() {
+    timeoutHandle = window.setTimeout("location.href = redirectURL;",redirectTime);
+} 
+function stopTimer() {
+    clearTimeout(timeoutHandle);
+} 
+
+
+
 function lerp(start, end, amount) {
     return start + (end - start) * amount;
 }
@@ -100,6 +114,7 @@ window.addEventListener("resize", updateScrollState);
 if (continueButton) {
     continueButton.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
+        timedRedirect();
     });
 }
 
